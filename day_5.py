@@ -1,12 +1,8 @@
-def turn_around():
-    turn_left()
-    turn_left()
-  
 def turn_rigth():
     turn_left()
     turn_left()
-    turn_left()    
-
+    turn_left()
+        
 def jump_1():
         turn_left()
         move()
@@ -23,9 +19,7 @@ while not(at_goal()):
             if front_is_clear():
                 while front_is_clear():
                     move()
-                turn_left()
-
-
-
-
-        
+                turn_left()            
+    else:
+        turn_rigth()
+        move()
