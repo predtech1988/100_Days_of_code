@@ -1,3 +1,4 @@
+#Version 2 using dictionary
 from turtle import Turtle, Screen
 from random import randint
 
@@ -35,42 +36,32 @@ deb= Turtle(shape="turtle")
 deb.penup()
 deb.goto(x = -230, y = -60)
 
-print(tim.position())
-
-turtles = [
-    {"tim": tim},
-    {"bob":bob},
-    {"jack": jack},
-    {"ron": ron},
-    {"deb":deb},
-]
-print(type(turtles[0]))
+turtles = {tim: "red", bob: "pink", jack: "green", ron: "blue", deb: "black",}
 
 
 def run(name):
     x_pos = name.position()
-    print(x_pos[0])
-    if x_pos[0] <= 215:
+    if x_pos[0] <= 220:
         name.forward(randint(1, 20))
         return True
     else:
+        decide_winner(name)
         return False
+
+
+def decide_winner(turtle_name):
+    winner_color = turtles[turtle_name]
+    if winner_color == user_bet:
+        print(f"You WINNER! {winner_color.title()} is first turtle!")        
+    else:
+        print(f"You LOSER! {winner_color.title()} is first turtle!")
+
 
 while is_run:
     for turtle in turtles:
         if is_run:
-            for key in turtle:
-                print(key)
-                result = run(turtle[key])
-                if not result:
-                    if user_bet == key:
-                        print(f"You WINNER! {key} is first turtle!")
-                        is_run = False
-                        break
-                    else:
-                        print(f"You LOSER! {key} is first turtle!")
-                        is_run = False
-                        break
+            is_run = run(turtle)
         else:
             break
+
 screen.exitonclick()
