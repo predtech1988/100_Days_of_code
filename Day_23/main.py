@@ -12,7 +12,7 @@ screen.listen()
 scoreboard = Scoreboard()
 
 player = Player()
-cars = Cars()
+#cars = Cars()
 
 
 screen.onkey(fun= player.move_turtle, key= "Up")
