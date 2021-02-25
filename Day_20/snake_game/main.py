@@ -30,18 +30,21 @@ while game_is_running:
         print("Eat it")
         food.update_food_position()
         scoreboard_.add_score()
-        snake_.new_segmaent(1)
+        snake_.new_segment(1)
+        
 
     if snake_.turtles_list[0].xcor() > 280 or snake_.turtles_list[0].xcor() < -280 or snake_.turtles_list[0].ycor() > 280 or snake_.turtles_list[0].ycor() < -280:
         print("YOU LOSE!")
-        scoreboard_.game_over()
-        game_is_running = False
+        scoreboard_.reset_score()
+        snake_.reset()
+
 
     for snake_segment in snake_.turtles_list[1:]:
         if snake_.turtles_list[0].distance(snake_segment) < 10:
             print("YOU LOSE!")
-            scoreboard_.game_over()
-            game_is_running = False
+            scoreboard_.reset_score()
+            snake_.reset()
+            
 
 
 screen.exitonclick()

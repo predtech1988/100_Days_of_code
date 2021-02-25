@@ -6,9 +6,9 @@ class Snake:
 
     def __init__(self, number):
         self.turtles_list = []
-        self.new_segmaent(number)
+        self.new_segment(number)
 
-    def new_segmaent(self, num):
+    def new_segment(self, num):
         for i in range(num):
             new_turtle = Turtle(shape="square")
             new_turtle.color("white")
@@ -22,6 +22,12 @@ class Snake:
             new_y = self.turtles_list[turtle - 1].ycor()
             self.turtles_list[turtle].goto(new_x, new_y)
         self.turtles_list[0].forward(MOVE_DISTANCE)
+
+    def reset(self):
+        for segment in self.turtles_list:
+            segment.goto(1000, 1000)
+        self.turtles_list.clear()
+        self.new_segment(3)
 
     def up(self):
         if self.turtles_list[0].heading() != 270:
