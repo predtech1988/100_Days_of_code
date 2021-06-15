@@ -6,3 +6,14 @@ Day_16/Coffee Machine Program Requirements.pdf
 .vscode/
 .gitignore
 send_email.py
+src
+Day_xx/
+__pycache__/
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
