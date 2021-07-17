@@ -1,4 +1,8 @@
-from flask import Flask, render_template
+# https://gist.github.com/discover
+#C:\Users\admin\Py\cour\map>python -m venv .venv 
+#cd .venv
+#Scripts\activate.bat
+from flask import Flask, render_template, request
 
 from post import Post
 
@@ -14,6 +18,17 @@ def main_page():
 @app.route("/about")
 def about_page():
     return render_template("about.html")
+
+
+@app.route("/contact", methods=['GET', 'POST'])
+def login_page():
+    if request.method == "GET":
+        return contact_page()
+    elif request.method =="POST":
+        print(request.form["name"])
+        print(request.form["email"])    
+        return render_template("form-entry.html", message ="Success")
+
 
 
 @app.route("/contact")
