@@ -1,0 +1,94 @@
+{% extends 'bootstrap/base.html' %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='/css/styles.css')}}">
+{% endblock %}
+
+{% block title %}Add A New Cafe{% endblock %}
+
+{% block content %}
+<div class="container" >
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+
+      <h1>Add a new cafe into the database</h1>
+
+      <form class="form-group" action="{{ url_for('add_cafe') }}" method="POST" novalidate=True>
+        <div class="form-group">
+          {{ form.csrf_token }}
+        </div>
+        <div class="form-group">
+            {{ form.cafe.label(class="form-control-label", for="cafe", id="cafe") }}
+            {{ form.cafe(placeholder="Cafe Name", class="form-control", id="cafe") }}
+            {% if form.cafe.errors %}
+              <ul class="error">
+                {% for error in form.cafe.errors %}
+                <li>{{error}}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.location.label(class="form-control-label", for="location", id="location") }}
+          {{ form.location(placeholder="Location", class="form-control", id="location") }}
+          {% if form.location.errors %}
+          <ul class="error">
+            {% for error in form.location.errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}          
+        </div>
+        <div class="form-group">
+          {{ form.opening_time.label(class="form-control-label", for="opening_time", id="opening_time") }}
+          {{ form.opening_time(placeholder="8:00AM", class="form-control", id="opening_time") }}
+          {% if form.opening_time.errors %}
+          <ul class="error">
+            {% for error in form.opening_time.errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}  
+        </div>
+        <div class="form-group">
+          {{ form.closing_time.label(class="form-control-label", for="closing_time", id="closing_time") }}
+          {{ form.closing_time(placeholder="7:30PM", class="form-control", id="closing_time") }}
+          {% if form.closing_time.errors %}
+          <ul class="error">
+            {% for error in form.closing_time.errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}  
+        </div>
+        <div class="form-group">
+          <div>
+              {{ form.coffee_rating.label(class="form-control-label") }}
+              {{ form.coffee_rating(class="p-2 form-control") }}
+          </div>        
+        </div>
+        <div class="form-group">
+          <div>
+              {{ form.wifi_rating.label(class="form-control-label") }}
+              {{ form.wifi_rating(class="p-2 form-control") }}
+          </div>        
+        </div>
+        <div class="form-group">
+          <div>
+              {{ form.power_socket_rating.label(class="form-control-label") }}
+              {{ form.power_socket_rating(class="p-2 form-control") }}
+          </div>        
+        </div>
+
+        <div class="form-group">
+          {{ form.submit(class="btn-sm btm-primary form-control") }}
+        </div>        
+      </form>
+
+	  <p class="space-above"><a href="#">See all cafes</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
