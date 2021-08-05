@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Main_page</h1>
+    <ul>
+        {% for manga in manga_list %}
+        <li>{{manga.title}}</li>
+    {% endfor %}
+    </ul>
+
+
+    {% endblock %}
