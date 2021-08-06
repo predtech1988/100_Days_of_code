@@ -20,3 +20,4 @@ venv.bak/
 test.py
 test.ipynb
 .DS_Store
+poetry.lock
