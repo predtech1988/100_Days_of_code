@@ -84,19 +84,10 @@ def logout():
     pass
 
 
-# @app.route('/download/<path:filename>')
-# def download(filename):
-#     return send_from_directory(
-#         directory='Day_68/static/files',
-#         path=filename,
-#         as_attachment=True
-#     )
-
-
 @app.route('/download/<path:file_name>')
 def download(file_name):
-    print("file_name")
-    file_name = "cheat_sheet.pdf"
-    return send_from_directory(directory="static/files", path="Day_68/static/files/cheat_sheet.pdf")
+    return send_from_directory(directory="static/files", path=file_name)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
