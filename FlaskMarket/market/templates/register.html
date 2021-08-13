@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}
+Register page
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-3">Please register</h1>
+    <form  method="POST" class="form-register" style="color:white">
+        {{ form.csrf_token }}
+        <div class="form-group" >
+            {{ form.user_name.label(class="form-control-label", for="username", id="user_name") }}
+            {{ form.user_name(placeholder="User Name", class="form-control", id="user_name") }}
+        </div>
+        <div class="form-group" >
+            {{ form.email_address.label(class="form-control-label", for="email_address", id="email_address") }}
+            {{ form.email_address(placeholder="Email", class="form-control", id="email_address") }}
+        </div>
+        <div class="form-group" >
+            {{ form.password1.label(class="form-control-label", for="password1", id="password1") }}
+            {{ form.password1(placeholder="Password", class="form-control", id="password1") }}
+        </div>
+
+        <div class="form-group" >
+            {{ form.password2.label(class="form-control-label", for="password2", id="password2") }}
+            {{ form.password2(placeholder="Confirm password", class="form-control", id="password2") }}
+        </div>
+        <div class="form-group" >
+            <br>
+            <div class="checkbox mb-3">
+                <h6>Already have an account?</h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('login_page') }}">Login</a>
+             </div>
+             <br>
+            {{ form.submit(class="btn-lg btm-primary btn-block") }}
+            <!-- {{ form.submit(class="btn-sm btm-primary") }} -->
+        </div>
+        
+    </form>
+</div>
+{% endblock %}
