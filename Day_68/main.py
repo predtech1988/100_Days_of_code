@@ -3,6 +3,7 @@ import os
 from flask import (
     Flask,
     flash,
+    get_flashed_messages,
     redirect,
     render_template,
     request,
@@ -27,8 +28,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
+login_manager.login_message_category = "info"
 ##CREATE TABLE IN DB
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,8 +40,12 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(1000))
     
     
-    def __repr__(self):
-        return '<User %r>' % self.username
+    # def __repr__(self):
+    #     return '<User %r>' % self.username
+
+    def check_password_correction(self, attempted_password):
+        return check_password_hash(self.password, attempted_password)
+
 
 
 #Line below only required once, when creating DB.
@@ -47,15 +53,25 @@ class User(UserMixin, db.Model):
 
 ## DB Methods
 def add_new_user(data):
-    new_user = User(
-        name=request.form["name"],
-        email=request.form["email"],
-        password=hash_passwd(request.form["password"])[2],
-        salt=hash_passwd(request.form["password"])[1],
-    )
-    db.session.add(new_user)
-    db.session.commit()
-    db.session.close()
+    # print(request.form)
+    is_user_exists = User.query.filter_by(email=request.form["email"]).first()
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFF")
+    print(is_user_exists)
+    if is_user_exists:
+        flash("Email already in use", category="danger")
+        return False  
+    else:
+        new_user = User(
+            name=request.form["name"],
+            email=request.form["email"],
+            password=hash_passwd(request.form["password"]),
+            salt=hash_passwd(request.form["password"]).split("$")[1],
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        db.session.close()
+        flash('Registered successfully.',category="info")
+        return True
 
 
 ## Functions
@@ -64,7 +80,7 @@ def hash_passwd(password):
         password,
         method="pbkdf2:sha256",
         salt_length=8
-        ).split("$")
+        )
 
 
 ## Routes
@@ -79,40 +95,44 @@ def home():
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        add_new_user(request)
-        # new = User(
-        #     name=request.form["name"],
-        #     email=request.form["email"],
-        #     password=request.form["password"],
-        # )
-        return render_template("secrets.html", user_name=request.form["name"])
+        if add_new_user(request):
+            return render_template("secrets.html", user_name=request.form["name"])
     return render_template("register.html")
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        print(request.form["email"])
-        user = User.query.filter_by(email=request.form["email"]).first()
-        login_user(user=user)
-        flash('Logged in successfully.')
-        next = request.args.get('next')
-        return redirect(next or url_for('secrets'))
+        attempted_user = User.query.filter_by(email=request.form["email"]).first()
+        #print(attempted_user.is_authenticated)
+        if attempted_user and attempted_user.check_password_correction(attempted_password=request.form["password"]):
+            login_user(attempted_user)
+            flash('Logged in successfully.',category="info")
+            next = request.args.get('next')
+            return redirect(next or url_for('secrets'))
+        else:
+            flash('Logging in FAILED!.',category="error")
+            return redirect(url_for("home"))
 
     return render_template("login.html")
 
 
 @app.route('/secrets')
+@login_required
 def secrets():
-    return render_template("secrets.html")
+    print(current_user)
+
+    return render_template("secrets.html", user_name=current_user.name)
 
 
 @app.route('/logout')
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for("home"))
 
 
 @app.route('/download/<path:file_name>')
+@login_required
 def download(file_name):
     return send_from_directory(directory="static/files", path=file_name)
 
