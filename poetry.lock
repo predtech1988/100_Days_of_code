@@ -183,6 +183,22 @@ python-versions = "*"
 Flask = "*"
 
 [[package]]
+name = "flask-gravatar"
+version = "0.5.0"
+description = "Small extension for Flask to make usage of Gravatar service easy."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Flask = ">=0.10"
+
+[package.extras]
+all = ["Sphinx (>=1.4.2)", "check-manifest (>=0.25)", "coverage (>=4.0)", "isort (>=4.2.2)", "pydocstyle (>=1.0.0)", "pytest-cache (>=1.0)", "pytest-cov (>=1.8.0)", "pytest-pep8 (>=1.0.6)", "pytest (>=2.8.0)", "Sphinx (>=1.4.2)", "check-manifest (>=0.25)", "coverage (>=4.0)", "isort (>=4.2.2)", "pydocstyle (>=1.0.0)", "pytest-cache (>=1.0)", "pytest-cov (>=1.8.0)", "pytest-pep8 (>=1.0.6)", "pytest (>=2.8.0)"]
+docs = ["Sphinx (>=1.4.2)"]
+tests = ["check-manifest (>=0.25)", "coverage (>=4.0)", "isort (>=4.2.2)", "pydocstyle (>=1.0.0)", "pytest-cache (>=1.0)", "pytest-cov (>=1.8.0)", "pytest-pep8 (>=1.0.6)", "pytest (>=2.8.0)"]
+
+[[package]]
 name = "flask-login"
 version = "0.5.0"
 description = "User session management for Flask"
@@ -426,7 +442,7 @@ locale = ["Babel (>=1.3)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d4c326c8726ec122e0d29fcf1c7bbfe02b3d345636b07b96e3b8e63ff55c6608"
+content-hash = "888e6b5e514f1d14da9e07e2d30fff6b71365e40273fc8260273059976f27cef"
 
 [metadata.files]
 appdirs = [
@@ -534,6 +550,10 @@ flask-bootstrap = [
 flask-ckeditor = [
     {file = "Flask-CKEditor-0.4.6.tar.gz", hash = "sha256:4b6aa0e831616b86c8c393cb1e5dcae8f62c66c16ef4316071dc7ccf77d4c9a1"},
     {file = "Flask_CKEditor-0.4.6-py2.py3-none-any.whl", hash = "sha256:aa95bf2fab8d4379fcbe5786310bb4fbae467016ed0149c407101e0e4c278fa8"},
+]
+flask-gravatar = [
+    {file = "Flask-Gravatar-0.5.0.tar.gz", hash = "sha256:60665f31c2c612891db68ff801e93ed3a0881c6c8ec346abc64d2a9923f562e1"},
+    {file = "Flask_Gravatar-0.5.0-py2.py3-none-any.whl", hash = "sha256:93be048a58cef92345e7bfc78e918e7f4c729b3a33646510b71948c024e7f591"},
 ]
 flask-login = [
     {file = "Flask-Login-0.5.0.tar.gz", hash = "sha256:6d33aef15b5bcead780acc339464aae8a6e28f13c90d8b1cf9de8b549d1c0b4b"},
